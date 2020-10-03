@@ -57,6 +57,8 @@ users = list(users)
 repos = set()
 user2repo = []
 for user in users:
+    if user == username: # Don't recommend self repos
+        continue
     user_repos = get_repos(user, url="", repo_list=[])
     repos.update(repo + "_repo" for repo in user_repos)
     user2repo += [(user, repo + "_repo") for repo in user_repos]
