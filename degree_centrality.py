@@ -55,7 +55,7 @@ for user in total_users:
 nx.write_edgelist(G, "luc1f3r616.edgelist")
 
 # Read Graph
-# G = nx.read_edgelist("imro8.edgelist", create_using=nx.DiGraph)
+# G = nx.read_edgelist("1uc1f3r616.edgelist", create_using=nx.DiGraph)
 
 ## Indegree --> Importance of User | Biased if considering only self
 
