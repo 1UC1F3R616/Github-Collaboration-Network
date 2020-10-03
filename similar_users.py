@@ -40,8 +40,8 @@ G.add_nodes_from(repos, bipartite='repos')
 G.add_edges_from(user2repo)
 
 print(nx.is_bipartite(G))
-nx.draw_networkx(G) 
-plt.show()
+# nx.draw_networkx(G) 
+# plt.show()
 
 def shared_partition_nodes(G, node1, node2):
     """
@@ -93,7 +93,19 @@ def user_similarity(G, user1, user2, proj_nodes):
     return len(shared_nodes) / len(proj_nodes)
 
 # Compute the similarity score between users 
-repo_nodes = get_nodes_from_partition(G, 'repos')
-similarity_score = user_similarity(G, '1UC1F3R616', 'Defcon27', repo_nodes)
+# repo_nodes = get_nodes_from_partition(G, 'repos')
+# similarity_score = user_similarity(G, '1UC1F3R616', 'Defcon27', repo_nodes)
+# print(similarity_score)
 
-print(similarity_score)
+repo_nodes = get_nodes_from_partition(G, 'repos')
+
+compare_done = dict()
+similarity_score_matrix = []
+for user1 in users:
+    for user2 in users:
+        if (user1 != user2) and (user2 not in compare_done):
+            similarity_score = user_similarity(G, user1, user2, repo_nodes)
+            similarity_score_matrix.append([similarity_score, user1, user2])
+            compare_done[user1] = True
+similarity_score_matrix.sort(key=lambda x: x[0], reverse=True)
+print(similarity_score_matrix[:5])
