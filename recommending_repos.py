@@ -7,20 +7,21 @@ from github_scrape import followers, following, get_repos
 
 G = nx.Graph()
 
+
 def recommend_repositories(G, from_user, to_user):
 
     users = [from_user, to_user]
     repos = set()
     user2repo = []
     for user in users:
-        user_repos = get_repos(user, url='', repo_list=[])
-        repos.update(repo+'_repo' for repo in user_repos)
-        user2repo += [(user, repo+'_repo') for repo in user_repos]
+        user_repos = get_repos(user, url="", repo_list=[])
+        repos.update(repo + "_repo" for repo in user_repos)
+        user2repo += [(user, repo + "_repo") for repo in user_repos]
     repos = list(repos)
     # print(repos)
 
-    G.add_nodes_from(users, bipartite='users')
-    G.add_nodes_from(repos, bipartite='repos')
+    G.add_nodes_from(users, bipartite="users")
+    G.add_nodes_from(repos, bipartite="repos")
 
     # print(G.nodes(data=True))
 
@@ -35,5 +36,6 @@ def recommend_repositories(G, from_user, to_user):
     # Identify repositories that the from_user is connected to that the to_user is not connected to
     return from_repos.difference(to_repos)
 
+
 # Print the repositories to be recommended
-print(recommend_repositories(G, '1UC1F3R616', 'Defcon27'))
+print(recommend_repositories(G, "1UC1F3R616", "Defcon27"))
