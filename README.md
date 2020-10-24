@@ -1,7 +1,7 @@
-# Github-Collaboration-Network
-## Applied Social Network Analysis
+<h1 align="center">GitGram</h1>
+<h3 align="center">Applied Social Network Analysis<h3>
 
-### Hosted App has a bug due to which results never shows up, Fixing will take time because of other projects rush work. Till then, hit it locally!
+#### Hosted App has a bug due to which results never shows up, Fixing will take time because of other projects rush work. Till then, hit it locally!
 
 
 ## Documentation
