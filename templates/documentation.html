@@ -6,6 +6,9 @@
     <title>Documentation</title>
 </head>
 <body>
-    Documentation
+    <!-- I don't care about ur template injection attacks, so you are welcome to try them here -->
+    {% if result.message %}
+    {{ result.message }}
+    {% endif  %}
 </body>
 </html>

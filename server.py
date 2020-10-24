@@ -25,9 +25,9 @@ async def home(request: Request):
     return templates.TemplateResponse('index.html', context={'request': request, 'result': result})
 
 @app.get('/documentation')
-async def impUsers(request: Request, username):
-    result = {}
-    return templates.TemplateResponse('documentation.html', context={'request': request, 'result': result, 'ans': 'ans'})
+async def documentation(request: Request):
+    result = {'message': 'will be updated sooner, 24-10-2020 22:50pm'}
+    return templates.TemplateResponse('documentation.html', context={'request': request, 'result': result})
 
 @app.post('/profiling')
 async def profiling(request: Request, username: str = Form(...)):
