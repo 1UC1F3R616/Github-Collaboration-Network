@@ -1,7 +1,7 @@
 <h1 align="center">GitGram</h1>
 <h3 align="center">Applied Social Network Analysis<h3>
 
-#### Hosted App has a bug due to which results never shows up for a user with high number of following or follow ups, Fixing will take time because of other projects rush work. Till then, hit it locally! or if try your luck!
+#### Hosted App has a bug due to which results never shows up for a user with high number of following or follow ups, Fixing will take time because of other projects rush work. Till then, hit it locally! or maybe try your luck!
 
 
 ## Documentation
