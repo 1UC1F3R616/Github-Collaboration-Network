@@ -21,7 +21,7 @@
     <script>
         // cyborgsri
 
-        
+
 
         $(document).ready(function () {
 
@@ -30,25 +30,25 @@
                 .then(data => {
                     let starCounts = document.getElementById("starCounts");
                     let forkCounts = document.getElementById("forkCounts")
-                    
-                    starCounts.innerHTML=`<a href="${data.stargazers_url}">${data.stargazers_count}</a>`;
+
+                    starCounts.innerHTML = `<a href="${data.stargazers_url}">${data.stargazers_count}</a>`;
                     forkCounts.innerHTML = `<a href="${data.forks_url}">${data.forks_count}</a>`
                 })
 
             // from here starts impUsers
             $("#impUsers").click(function () {
                 let username = document.getElementById("username");
-                console.log(username.value=="")
-                if (username.value=="") {
+                console.log(username.value == "")
+                if (username.value == "") {
                     let resultShow = document.getElementById("resultShow");
                     resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
                 }
-                
-                
+
+
                 else {
                     username = username.value
                     let message = document.getElementById("message");
-                    if (message==null) {
+                    if (message == null) {
                         let resultShow = document.getElementById("resultShow");
                         resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -60,7 +60,7 @@
                     }
                     else {
                         message.className = '';
-                        
+
                         console.log(3)
                         message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -68,58 +68,58 @@
     <div class="ui mini loader"></div>
   </div>
 </div>`;
-                    
+
                     }
                     // empty, wait message show, proceed if all good
                     $.ajax({
-                    url: "impUsers",
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    method: 'POST',
-                    
-                    data: {
-                        username: username,
-                    },
-                    success: function (result) {
-                        console.log('success impUsers')
+                        url: "impUsers",
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        method: 'POST',
 
-                        if ("imp_users" in result) {
-                            let resultShow = document.getElementById("resultShow");
-                            result = result.imp_users;
-                            let showCase = ''
-                            result.forEach(filtered)
-                            resultShow.innerHTML = showCase;
-                            console.log(showCase)
-                            function filtered(value, index, array) {
-                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank"> ${value[0]} </a>&nbsp;&nbsp;`
+                        data: {
+                            username: username,
+                        },
+                        success: function (result) {
+                            console.log('success impUsers')
+
+                            if ("imp_users" in result) {
+                                let resultShow = document.getElementById("resultShow");
+                                result = result.imp_users;
+                                let showCase = ''
+                                result.forEach(filtered)
+                                resultShow.innerHTML = showCase;
+                                console.log(showCase)
+                                function filtered(value, index, array) {
+                                    showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank"> ${value[0]} </a>&nbsp;&nbsp;`
+                                }
                             }
-                        }
 
-                    },
-                    error: function () {
-                        console.log("failure impUser");
-                    }
-                });
+                        },
+                        error: function () {
+                            console.log("failure impUser");
+                        }
+                    });
                 }
-                
+
             });
             // here ends impUsers
 
             $("#nextHack").click(function () {
                 let username = document.getElementById("username");
-                console.log(username.value=="")
-                if (username.value=="") {
+                console.log(username.value == "")
+                if (username.value == "") {
                     let resultShow = document.getElementById("resultShow");
                     resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
                 }
-                
-                
+
+
                 else {
                     username = username.value
                     let message = document.getElementById("message");
-                    if (message==null) {
+                    if (message == null) {
                         let resultShow = document.getElementById("resultShow");
                         resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -131,7 +131,7 @@
                     }
                     else {
                         message.className = '';
-                        
+
                         console.log(3)
                         message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -139,52 +139,52 @@
     <div class="ui mini loader"></div>
   </div>
 </div>`;
-                    
+
                     }
                     // empty, wait message show, proceed if all good
                     $.ajax({
-                    url: "nextHack",
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    method: 'POST',
-                    
-                    data: {
-                        username: username,
-                    },
-                    success: function (result) {
-                        console.log('success nextHack')
+                        url: "nextHack",
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        method: 'POST',
 
-                        if ("largest_community" in result) {
-                            
-                            let resultShow = document.getElementById("resultShow");
-                            
-                            if (result.largest_community.length == 0) {
-                            resultShow.innerHTML = `<p class="ui green label">Expand Your Network! Follow some creative minds and build superb projects!</p>`;
-                            }
-                            else {
-                            result = result.largest_community;
-                            console.log(result)
-                            let showCase = ''
+                        data: {
+                            username: username,
+                        },
+                        success: function (result) {
+                            console.log('success nextHack')
 
-                            let c1 = ''
-                            let c2 = ''
-                            for (i=0; i<result.length; i++) {
-                                console.log(result[i])
-                                for (j=0; j<result[i].length; j++) {
-                                    console.log(result[i][j])
-                                    if (i===0) {
-                                        c1 += `<a href="https://www.github.com/${result[i][j]}" class="ui teal label" target="_blank"> ${result[i][j]} </a></br></br>`
-                                    }
-                                    else if (i===1) {
-                                        c2 += `<a href="https://www.github.com/${result[i][j]}" class="ui teal label" target="_blank"> ${result[i][j]} </a></br></br>`
-                                    }
+                            if ("largest_community" in result) {
+
+                                let resultShow = document.getElementById("resultShow");
+
+                                if (result.largest_community.length == 0) {
+                                    resultShow.innerHTML = `<p class="ui green label">Expand Your Network! Follow some creative minds and build superb projects!</p>`;
                                 }
-                            }
+                                else {
+                                    result = result.largest_community;
+                                    console.log(result)
+                                    let showCase = ''
+
+                                    let c1 = ''
+                                    let c2 = ''
+                                    for (i = 0; i < result.length; i++) {
+                                        console.log(result[i])
+                                        for (j = 0; j < result[i].length; j++) {
+                                            console.log(result[i][j])
+                                            if (i === 0) {
+                                                c1 += `<a href="https://www.github.com/${result[i][j]}" class="ui teal label" target="_blank"> ${result[i][j]} </a></br></br>`
+                                            }
+                                            else if (i === 1) {
+                                                c2 += `<a href="https://www.github.com/${result[i][j]}" class="ui teal label" target="_blank"> ${result[i][j]} </a></br></br>`
+                                            }
+                                        }
+                                    }
 
 
-                            resultShow.innerHTML = `<div class="ui segment">
+                                    resultShow.innerHTML = `<div class="ui segment">
   <div class="ui two column very relaxed grid">
     <div class="column"> ${c1}
         </div>
@@ -195,35 +195,35 @@
     and
   </div>
 </div>`;
-                    
-                            }
-                            
-                        }
 
-                    },
-                    error: function () {
-                        console.log("failure nextHack");
-                    }
-                });
+                                }
+
+                            }
+
+                        },
+                        error: function () {
+                            console.log("failure nextHack");
+                        }
+                    });
                 }
-                
+
             });
-        ////////////////// here ends nextHack//////////////////////////////////
+            ////////////////// here ends nextHack//////////////////////////////////
 
             // here starts recommendNet
             $("#recommendNet").click(function () {
                 let username = document.getElementById("username");
-                console.log(username.value=="")
-                if (username.value=="") {
+                console.log(username.value == "")
+                if (username.value == "") {
                     let resultShow = document.getElementById("resultShow");
                     resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
                 }
-                
-                
+
+
                 else {
                     username = username.value
                     let message = document.getElementById("message");
-                    if (message==null) {
+                    if (message == null) {
                         let resultShow = document.getElementById("resultShow");
                         resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -235,7 +235,7 @@
                     }
                     else {
                         message.className = '';
-                        
+
                         console.log(3)
                         message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -243,59 +243,59 @@
     <div class="ui mini loader"></div>
   </div>
 </div>`;
-                    
+
                     }
                     // empty, wait message show, proceed if all good
                     $.ajax({
-                    url: "recommendNet",
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    method: 'POST',
-                    
-                    data: {
-                        username: username,
-                    },
-                    success: function (result) {
-                        console.log('success recommended_networking')
+                        url: "recommendNet",
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        method: 'POST',
 
-                        if ("recommended_networking" in result) {
-                            let resultShow = document.getElementById("resultShow");
-                            result = result.recommended_networking;
-                            let showCase = ''
-                            result.forEach(filtered)
-                            resultShow.innerHTML = showCase;
-                            console.log(showCase)
-                            function filtered(value, index, array) {
-                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank"> ${value[0]} </a> &  <a href="https://www.github.com/${value[1]}" class="ui teal label" target="_blank"> ${value[1]} </a></br></br>`
+                        data: {
+                            username: username,
+                        },
+                        success: function (result) {
+                            console.log('success recommended_networking')
+
+                            if ("recommended_networking" in result) {
+                                let resultShow = document.getElementById("resultShow");
+                                result = result.recommended_networking;
+                                let showCase = ''
+                                result.forEach(filtered)
+                                resultShow.innerHTML = showCase;
+                                console.log(showCase)
+                                function filtered(value, index, array) {
+                                    showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank"> ${value[0]} </a> &  <a href="https://www.github.com/${value[1]}" class="ui teal label" target="_blank"> ${value[1]} </a></br></br>`
+                                }
                             }
-                        }
 
-                    },
-                    error: function () {
-                        console.log("failure recommended_networking");
-                    }
-                });
+                        },
+                        error: function () {
+                            console.log("failure recommended_networking");
+                        }
+                    });
                 }
-                
+
             });
             // here ends recommendNet///////////////////////////////////////////////
 
             // here starts commitHere/////////////////////////////////////////////
             $("#commitHere").click(function () {
                 let username = document.getElementById("username");
-                console.log(username.value=="")
-                if (username.value=="") {
+                console.log(username.value == "")
+                if (username.value == "") {
                     let resultShow = document.getElementById("resultShow");
                     resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
                 }
-                
-                
+
+
                 else {
                     username = username.value
                     let message = document.getElementById("message");
-                    if (message==null) {
+                    if (message == null) {
                         let resultShow = document.getElementById("resultShow");
                         resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -307,7 +307,7 @@
                     }
                     else {
                         message.className = '';
-                        
+
                         console.log(3)
                         message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -315,42 +315,42 @@
     <div class="ui mini loader"></div>
   </div>
 </div>`;
-                    
+
                     }
                     // empty, wait message show, proceed if all good
                     $.ajax({
-                    url: "commitHere",
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    method: 'POST',
-                    
-                    data: {
-                        username: username,
-                    },
-                    success: function (result) {
-                        console.log('success commitHere')
+                        url: "commitHere",
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        method: 'POST',
 
-                        if ("commit_here" in result) {
-                            let resultShow = document.getElementById("resultShow");
-                            result = result.commit_here;
-                            let showCase = ''
-                            result.forEach(filtered)
-                            resultShow.innerHTML = showCase;
-                            console.log(showCase)
-                            function filtered(value, index, array) {
-                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank" style="padding-bottom: 10px"> ${value[0]} </a>&nbsp;&nbsp;`
+                        data: {
+                            username: username,
+                        },
+                        success: function (result) {
+                            console.log('success commitHere')
+
+                            if ("commit_here" in result) {
+                                let resultShow = document.getElementById("resultShow");
+                                result = result.commit_here;
+                                let showCase = ''
+                                result.forEach(filtered)
+                                resultShow.innerHTML = showCase;
+                                console.log(showCase)
+                                function filtered(value, index, array) {
+                                    showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank" style="padding-bottom: 10px"> ${value[0]} </a>&nbsp;&nbsp;`
+                                }
                             }
-                        }
 
-                    },
-                    error: function () {
-                        console.log("failure commitHere");
-                    }
-                });
+                        },
+                        error: function () {
+                            console.log("failure commitHere");
+                        }
+                    });
                 }
-                
+
             });
 
             // here ends commitHere
@@ -358,17 +358,17 @@
             // here starts similarityIndex
             $("#similarityIndex").click(function () {
                 let username = document.getElementById("username");
-                console.log(username.value=="")
-                if (username.value=="") {
+                console.log(username.value == "")
+                if (username.value == "") {
                     let resultShow = document.getElementById("resultShow");
                     resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
                 }
-                
-                
+
+
                 else {
                     username = username.value
                     let message = document.getElementById("message");
-                    if (message==null) {
+                    if (message == null) {
                         let resultShow = document.getElementById("resultShow");
                         resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -380,7 +380,7 @@
                     }
                     else {
                         message.className = '';
-                        
+
                         console.log(3)
                         message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
   <p></p>
@@ -388,50 +388,50 @@
     <div class="ui mini loader"></div>
   </div>
 </div>`;
-                    
+
                     }
                     // empty, wait message show, proceed if all good
                     $.ajax({
-                    url: "similarityIndex",
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    method: 'POST',
-                    
-                    data: {
-                        username: username,
-                    },
-                    success: function (result) {
-                        console.log('success similarityIndex')
+                        url: "similarityIndex",
+                        headers: {
+                            'accept': 'application/json',
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        method: 'POST',
 
-                        if ("similarity_index" in result) {
-                            let resultShow = document.getElementById("resultShow");
-                            result = result.similarity_index;
-                            let showCase = ''
-                            result.forEach(filtered)
-                            resultShow.innerHTML = showCase;
-                            console.log(showCase)
-                            function filtered(value, index, array) {
-                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank" style="padding-bottom: 10px"> ${value[0]} </a>&nbsp;&nbsp;`
+                        data: {
+                            username: username,
+                        },
+                        success: function (result) {
+                            console.log('success similarityIndex')
+
+                            if ("similarity_index" in result) {
+                                let resultShow = document.getElementById("resultShow");
+                                result = result.similarity_index;
+                                let showCase = ''
+                                result.forEach(filtered)
+                                resultShow.innerHTML = showCase;
+                                console.log(showCase)
+                                function filtered(value, index, array) {
+                                    showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank" style="padding-bottom: 10px"> ${value[0]} </a>&nbsp;&nbsp;`
+                                }
                             }
-                        }
 
-                    },
-                    error: function () {
-                        console.log("failure similarityIndex");
-                    }
-                });
+                        },
+                        error: function () {
+                            console.log("failure similarityIndex");
+                        }
+                    });
                 }
-                
+
             });
             // here ends SimilarityIndex
 
         });
 
-        
 
-        
+
+
 
     </script>
 
@@ -467,24 +467,24 @@
                 <input type="text" placeholder="username" id="username">
             </div>
             &nbsp;&nbsp;
-            
+
 
         </div>
         <div class="ui labeled button" tabindex="0">
             <div class="ui basic gray button">
-              <i class="star icon"></i> Stars
+                <i class="star icon"></i> Stars
             </div>
             <a class="ui basic gray left pointing label" id="starCounts">
-              
+
             </a>
-          </div>&nbsp;
-          <div class="ui labeled button" tabindex="0">
+        </div>&nbsp;
+        <div class="ui labeled button" tabindex="0">
             <div class="ui basic gray button">
-              <i class="fork icon"></i> Forks
+                <i class="fork icon"></i> Forks
             </div>
             <a class="ui basic left pointing gray label" id="forkCounts">
             </a>
-          </div>&nbsp;
+        </div>&nbsp;
 
         </br></br>
 
@@ -540,7 +540,7 @@
             </svg>
         </a>
 
-        
+
 
 
         <script>
