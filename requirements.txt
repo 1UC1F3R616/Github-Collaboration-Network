@@ -1,4 +1,5 @@
 networkx
+fastapi[all]
 jinja2
 aiofiles
 python-multipart
