@@ -1,5 +1,8 @@
+astroid==2.3.3
+Click==7.0
+colorama==0.4.3
 networkx
-fastapi[all]
+fastapi==0.47.1
 jinja2
 aiofiles
 python-multipart
