@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
-app.mount("/media", StaticFiles(directory="media/"), name="media")
+# app.mount("/media", StaticFiles(directory="media/"), name="media")
 templates = Jinja2Templates(directory="templates/")
 
 ############################################## utils #########################################
