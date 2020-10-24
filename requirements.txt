@@ -1,7 +1,6 @@
 networkx
 fastapi[all]
-uvicorn
+uvicorn==0.9.0
 jinja2
 aiofiles
 python-multipart
-gunicorn
