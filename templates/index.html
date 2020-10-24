@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous">
+        </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <title>GitGram</title>
+    <style>
+    </style>
+
+
+    <script>
+        // cyborgsri
+
+        
+
+        $(document).ready(function () {
+
+            fetch('https://api.github.com/repos/1UC1F3R616/Github-Collaboration-Network')
+                .then(response => response.json())
+                .then(data => {
+                    let starCounts = document.getElementById("starCounts");
+                    let forkCounts = document.getElementById("forkCounts")
+                    
+                    starCounts.innerHTML=`<a href="${data.stargazers_url}">${data.stargazers_count}</a>`;
+                    forkCounts.innerHTML = `<a href="${data.forks_url}">${data.forks_count}</a>`
+                })
+
+            // from here starts impUsers
+            $("#impUsers").click(function () {
+                let username = document.getElementById("username");
+                console.log(username.value=="")
+                if (username.value=="") {
+                    let resultShow = document.getElementById("resultShow");
+                    resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
+                }
+                
+                
+                else {
+                    username = username.value
+                    let message = document.getElementById("message");
+                    if (message==null) {
+                        let resultShow = document.getElementById("resultShow");
+                        resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                        console.log(2)
+                    }
+                    else {
+                        message.className = '';
+                        
+                        console.log(3)
+                        message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                    
+                    }
+                    // empty, wait message show, proceed if all good
+                    $.ajax({
+                    url: "impUsers",
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    method: 'POST',
+                    
+                    data: {
+                        username: username,
+                    },
+                    success: function (result) {
+                        console.log('success impUsers')
+
+                        if ("imp_users" in result) {
+                            let resultShow = document.getElementById("resultShow");
+                            result = result.imp_users;
+                            let showCase = ''
+                            result.forEach(filtered)
+                            resultShow.innerHTML = showCase;
+                            console.log(showCase)
+                            function filtered(value, index, array) {
+                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank"> ${value[0]} </a>&nbsp;&nbsp;`
+                            }
+                        }
+
+                    },
+                    error: function () {
+                        console.log("failure impUser");
+                    }
+                });
+                }
+                
+            });
+            // here ends impUsers
+
+            $("#nextHack").click(function () {
+                let username = document.getElementById("username");
+                console.log(username.value=="")
+                if (username.value=="") {
+                    let resultShow = document.getElementById("resultShow");
+                    resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
+                }
+                
+                
+                else {
+                    username = username.value
+                    let message = document.getElementById("message");
+                    if (message==null) {
+                        let resultShow = document.getElementById("resultShow");
+                        resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                        console.log(2)
+                    }
+                    else {
+                        message.className = '';
+                        
+                        console.log(3)
+                        message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                    
+                    }
+                    // empty, wait message show, proceed if all good
+                    $.ajax({
+                    url: "nextHack",
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    method: 'POST',
+                    
+                    data: {
+                        username: username,
+                    },
+                    success: function (result) {
+                        console.log('success nextHack')
+
+                        if ("largest_community" in result) {
+                            
+                            let resultShow = document.getElementById("resultShow");
+                            
+                            if (result.largest_community.length == 0) {
+                            resultShow.innerHTML = `<p class="ui green label">Expand Your Network! Follow some creative minds and build superb projects!</p>`;
+                            }
+                            else {
+                            result = result.largest_community;
+                            console.log(result)
+                            let showCase = ''
+
+                            let c1 = ''
+                            let c2 = ''
+                            for (i=0; i<result.length; i++) {
+                                console.log(result[i])
+                                for (j=0; j<result[i].length; j++) {
+                                    console.log(result[i][j])
+                                    if (i===0) {
+                                        c1 += `<a href="https://www.github.com/${result[i][j]}" class="ui teal label" target="_blank"> ${result[i][j]} </a></br></br>`
+                                    }
+                                    else if (i===1) {
+                                        c2 += `<a href="https://www.github.com/${result[i][j]}" class="ui teal label" target="_blank"> ${result[i][j]} </a></br></br>`
+                                    }
+                                }
+                            }
+
+
+                            resultShow.innerHTML = `<div class="ui segment">
+  <div class="ui two column very relaxed grid">
+    <div class="column"> ${c1}
+        </div>
+    <div class="column"> ${c2}
+      </div>
+  </div>
+  <div class="ui vertical divider">
+    and
+  </div>
+</div>`;
+                    
+                            }
+                            
+                        }
+
+                    },
+                    error: function () {
+                        console.log("failure nextHack");
+                    }
+                });
+                }
+                
+            });
+        ////////////////// here ends nextHack//////////////////////////////////
+
+            // here starts recommendNet
+            $("#recommendNet").click(function () {
+                let username = document.getElementById("username");
+                console.log(username.value=="")
+                if (username.value=="") {
+                    let resultShow = document.getElementById("resultShow");
+                    resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
+                }
+                
+                
+                else {
+                    username = username.value
+                    let message = document.getElementById("message");
+                    if (message==null) {
+                        let resultShow = document.getElementById("resultShow");
+                        resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                        console.log(2)
+                    }
+                    else {
+                        message.className = '';
+                        
+                        console.log(3)
+                        message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                    
+                    }
+                    // empty, wait message show, proceed if all good
+                    $.ajax({
+                    url: "recommendNet",
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    method: 'POST',
+                    
+                    data: {
+                        username: username,
+                    },
+                    success: function (result) {
+                        console.log('success recommended_networking')
+
+                        if ("recommended_networking" in result) {
+                            let resultShow = document.getElementById("resultShow");
+                            result = result.recommended_networking;
+                            let showCase = ''
+                            result.forEach(filtered)
+                            resultShow.innerHTML = showCase;
+                            console.log(showCase)
+                            function filtered(value, index, array) {
+                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank"> ${value[0]} </a> &  <a href="https://www.github.com/${value[1]}" class="ui teal label" target="_blank"> ${value[1]} </a></br></br>`
+                            }
+                        }
+
+                    },
+                    error: function () {
+                        console.log("failure recommended_networking");
+                    }
+                });
+                }
+                
+            });
+            // here ends recommendNet///////////////////////////////////////////////
+
+            // here starts commitHere/////////////////////////////////////////////
+            $("#commitHere").click(function () {
+                let username = document.getElementById("username");
+                console.log(username.value=="")
+                if (username.value=="") {
+                    let resultShow = document.getElementById("resultShow");
+                    resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
+                }
+                
+                
+                else {
+                    username = username.value
+                    let message = document.getElementById("message");
+                    if (message==null) {
+                        let resultShow = document.getElementById("resultShow");
+                        resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                        console.log(2)
+                    }
+                    else {
+                        message.className = '';
+                        
+                        console.log(3)
+                        message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                    
+                    }
+                    // empty, wait message show, proceed if all good
+                    $.ajax({
+                    url: "commitHere",
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    method: 'POST',
+                    
+                    data: {
+                        username: username,
+                    },
+                    success: function (result) {
+                        console.log('success commitHere')
+
+                        if ("commit_here" in result) {
+                            let resultShow = document.getElementById("resultShow");
+                            result = result.commit_here;
+                            let showCase = ''
+                            result.forEach(filtered)
+                            resultShow.innerHTML = showCase;
+                            console.log(showCase)
+                            function filtered(value, index, array) {
+                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank" style="padding-bottom: 10px"> ${value[0]} </a>&nbsp;&nbsp;`
+                            }
+                        }
+
+                    },
+                    error: function () {
+                        console.log("failure commitHere");
+                    }
+                });
+                }
+                
+            });
+
+            // here ends commitHere
+
+            // here starts similarityIndex
+            $("#similarityIndex").click(function () {
+                let username = document.getElementById("username");
+                console.log(username.value=="")
+                if (username.value=="") {
+                    let resultShow = document.getElementById("resultShow");
+                    resultShow.innerHTML = `<p class="ui red label" id="message">Please Provide a Valid GitHub Username</p>`
+                }
+                
+                
+                else {
+                    username = username.value
+                    let message = document.getElementById("message");
+                    if (message==null) {
+                        let resultShow = document.getElementById("resultShow");
+                        resultShow.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                        console.log(2)
+                    }
+                    else {
+                        message.className = '';
+                        
+                        console.log(3)
+                        message.innerHTML = `<p class="ui teal label" id="message">Please be patient while we are crunching your data</p> <div class="ui segment">
+  <p></p>
+  <div class="ui active inverted dimmer">
+    <div class="ui mini loader"></div>
+  </div>
+</div>`;
+                    
+                    }
+                    // empty, wait message show, proceed if all good
+                    $.ajax({
+                    url: "similarityIndex",
+                    headers: {
+                        'accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    method: 'POST',
+                    
+                    data: {
+                        username: username,
+                    },
+                    success: function (result) {
+                        console.log('success similarityIndex')
+
+                        if ("similarity_index" in result) {
+                            let resultShow = document.getElementById("resultShow");
+                            result = result.similarity_index;
+                            let showCase = ''
+                            result.forEach(filtered)
+                            resultShow.innerHTML = showCase;
+                            console.log(showCase)
+                            function filtered(value, index, array) {
+                                showCase += `<a href="https://www.github.com/${value[0]}" class="ui teal label" target="_blank" style="padding-bottom: 10px"> ${value[0]} </a>&nbsp;&nbsp;`
+                            }
+                        }
+
+                    },
+                    error: function () {
+                        console.log("failure similarityIndex");
+                    }
+                });
+                }
+                
+            });
+            // here ends SimilarityIndex
+
+        });
+
+        
+
+        
+
+    </script>
+
+</head>
+
+<body>
+
+
+
+    <div style="margin-top: 10px" class="ui container">
+        <!-- <form id="magic" action="/profiling" method="POST" enctype="application/x-www-form-urlencoded"> -->
+        <!-- <div class="ui action input">
+
+            <div class="ui labeled input">
+                <div class="ui label">
+                    github.com/
+                </div>
+                <input type="text" placeholder="username" id="username">
+            </div>
+
+            <button class="ui button" type="submit" id="magicButton">
+                Magic
+            </button>
+        </div> -->
+        <!-- </form> -->
+
+        <div class="ui action input">
+
+            <div class="ui labeled input">
+                <div class="ui label">
+                    github.com/
+                </div>
+                <input type="text" placeholder="username" id="username">
+            </div>
+            &nbsp;&nbsp;
+            
+
+        </div>
+        <div class="ui labeled button" tabindex="0">
+            <div class="ui basic gray button">
+              <i class="star icon"></i> Stars
+            </div>
+            <a class="ui basic gray left pointing label" id="starCounts">
+              
+            </a>
+          </div>&nbsp;
+          <div class="ui labeled button" tabindex="0">
+            <div class="ui basic gray button">
+              <i class="fork icon"></i> Forks
+            </div>
+            <a class="ui basic left pointing gray label" id="forkCounts">
+            </a>
+          </div>&nbsp;
+
+        </br></br>
+
+        <button class="ui button primary" id="menu">
+            Show Menu
+        </button>
+
+        <a class="ui button primary inverted" href="#" id="impUsers">Important Users</a>
+        <a class="ui button primary inverted" href="#" id="nextHack">Next Hackathon</a>
+        <a class="ui button primary inverted" href="#" id="recommendNet">Recommended Networking</a>
+        <a class="ui button primary inverted" href="#" id="commitHere">Commit here</a>
+        <a class="ui button primary inverted" href="#" id="similarityIndex">Similarity Index</a>
+
+        <div class="ui sidebar inverted  
+                        vertical menu">
+            <h2 style="color:white; margin-left: 15px; margin-top: 10px">Menu</h2>
+            <a href="/" class="item">
+                Dashboard
+            </a>
+            <a href="/documentation" class="item">
+                Documentation
+            </a>
+        </div>
+        <div class="pusher">
+            <!-- Site content !-->
+        </div>
+
+        </br></br>
+        <div class="ui one column grid">
+
+            <div class="column" style="padding-left: 14px">
+                <div class="ui raised segment" style="overflow: scroll;" id="resultShow">
+
+                    <p class="ui yellow label" id="message">select an option</p>
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- GitHub Corner logo -->
+        <a tabindex="0" href="https://github.com/1UC1F3R616/Github-Collaboration-Network" rel="noopener noreferrer"
+            target="_blank" class="github-corner" aria-label="View source on GitHub">
+            <svg width="80" height="80" viewBox="0 0 250 250"
+                style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+                <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                <path
+                    d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                    fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+                <path
+                    d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                    fill="currentColor" class="octo-body"></path>
+            </svg>
+        </a>
+
+        
+
+
+        <script>
+            $('#menu').click(function () {
+                $('.ui.sidebar').sidebar('toggle');
+            })
+        </script>
+</body>
+
+</html>

@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as soup
 
+depth = ["6", 6] # 1 page has 50 users on GitHub | 300 is a good limit
 
 def followers(username, page="1", followers_list=[]):
     """
@@ -18,7 +19,7 @@ def followers(username, page="1", followers_list=[]):
     #####################Break Condition#########################
     stop_here = page_soup.find("p", {"class": "mt-4"})
     stop_here2 = page_soup.find("h3", {"class": "mb-1"})
-    if stop_here or stop_here2:
+    if stop_here or stop_here2 or page in depth:
         # print('\n\n\nAll Followers Fetched\n\n')
         # print(followers_list)
         return followers_list
@@ -56,7 +57,7 @@ def following(username, page="1", following_list=[]):
     stop_here = page_soup.find("p", {"class": "mt-4"})
     stop_here2 = page_soup.find("h3", {"class": "mb-1"})
 
-    if stop_here or stop_here2:
+    if stop_here or stop_here2 or page in depth:
         return following_list
     else:
         # print('\n\nMoving to Next Page\n\n')
