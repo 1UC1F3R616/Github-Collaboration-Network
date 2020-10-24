@@ -42,3 +42,4 @@
   - I can easily control that part with this approach, although later I will shift it to api usage and make it multi threaded
   - Time Complexity / Scraping for each analysis: `((followers + following) of followers) * ((followers + following) of following)`
 - It's Suggested to run locally
+- Possible reason for heroku bug is request getting timeout, only effective way to handle this is to revamp the web app server code
