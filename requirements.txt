@@ -1,5 +1,5 @@
 networkx
-fastapi
+fastapi[all]
 uvicorn
 jinja2
 aiofiles
