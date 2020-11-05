@@ -1,7 +1,7 @@
 <h1 align="center">GitGram</h1>
 <h3 align="center">Applied Social Network Analysis<h3>
 
-#### Hosted App has a bug due to which results never shows up, Fixing will take time because of other projects rush work. Till then, hit it locally!
+#### Hosted App has a bug due to which results never shows up for a user with high number of following or follow ups, Fixing will take time because of other projects rush work. Till then, hit it locally! or maybe try your luck!
 
 
 ## Documentation
@@ -42,3 +42,4 @@
   - I can easily control that part with this approach, although later I will shift it to api usage and make it multi threaded
   - Time Complexity / Scraping for each analysis: `((followers + following) of followers) * ((followers + following) of following)`
 - It's Suggested to run locally
+- Possible reason for heroku bug is request getting timeout, only effective way to handle this is to revamp the web app server code
