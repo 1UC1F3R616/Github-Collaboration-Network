@@ -17,8 +17,8 @@ def followers(username, page="1", followers_list=[]):
     page_soup = soup(page_fetch.text, "html.parser")
 
     #####################Break Condition#########################
-    stop_here = page_soup.find("p", {"class": "mt-4"})
-    stop_here2 = page_soup.find("h3", {"class": "mb-1"})
+    stop_here = page_soup.find("p", {"rel":"nofollow"})
+    stop_here2 = page_soup.find("p", {"rel":"nofollow"})
     if stop_here or stop_here2 or page in depth:
         # print('\n\n\nAll Followers Fetched\n\n')
         # print(followers_list)
@@ -28,7 +28,8 @@ def followers(username, page="1", followers_list=[]):
         pass
 
     ######################Finding Users##########################
-    users = page_soup.findAll("span", {"class": "link-gray"})
+    # users = page_soup.findAll("span", {"class": "link-gray"})
+    users = page_soup.findAll("span", {"class": "Link--primary"})
 
     for user in users:
         if user.text.strip():
@@ -54,17 +55,19 @@ def following(username, page="1", following_list=[]):
     page_soup = soup(page_fetch.text, "html.parser")
 
     #####################Break Condition#########################
-    stop_here = page_soup.find("p", {"class": "mt-4"})
-    stop_here2 = page_soup.find("h3", {"class": "mb-1"})
+    stop_here = page_soup.find("p", {"rel":"nofollow"})
+    stop_here2 = page_soup.find("p", {"rel":"nofollow"})
+    # print(stop_here)
+    # print(stop_here2)
 
-    if stop_here or stop_here2 or page in depth:
+    if stop_here or stop_here2 or page in depth: # fault in stopping condition
         return following_list
     else:
         # print('\n\nMoving to Next Page\n\n')
         pass
 
     ######################Finding Users##########################
-    users = page_soup.findAll("span", {"class": "link-gray"})
+    users = page_soup.findAll("span", {"class": "Link--primary"})
 
     for user in users:
         if user.text.strip():
@@ -120,3 +123,4 @@ def get_repos(username, url="", repo_list=[]):
 
 
 # print(get_repos('1UC1F3R616'))
+
